@@ -1,0 +1,2477 @@
+/* =========================================================
+   PIXELZINHOMAROTO
+   STYLE.CSS
+   ========================================================= */
+
+
+/* =========================================================
+   1. RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;           /* nada de barra de rolagem na página */
+}
+
+
+body {
+    font-family: "Courier New", monospace;
+
+    background: #76a2fc;
+
+    image-rendering: pixelated;
+
+    -webkit-text-size-adjust: 100%;
+}
+
+
+/* =========================================================
+   2. VARIÁVEIS
+   ========================================================= */
+
+:root {
+    --sky: #76a2fc;
+    --cloud: #ffffff;
+    --cloud-shade: #d8e6ff;
+
+    --grass-light: #8cc45a;
+    --grass: #6dab42;
+    --grass-dark: #5a9235;
+
+    --dirt-light: #8a4c2b;
+    --dirt: #6b4a28;
+    --dirt-dark: #4f2d1b;
+
+    --brown-dark: #2b241f;
+    --brown: #5a3a22;
+
+    --leaf-light: #94df2a;
+    --leaf: #57a025;
+    --leaf-dark: #39781f;
+
+    --stone-light: #c3ccdd;
+    --stone: #99a1b1;
+    --stone-mid: #7d869a;
+    --stone-dark: #5c6984;
+
+    --white: #f4f7ff;
+    --black: #14161c;
+    --ink: #2b2f38;
+
+    --yellow: #f0c040;
+    --red: #b24230;
+    --red-dark: #7d2a1d;
+    --green: #5a9235;
+
+    --ground-height: 25%;
+}
+
+
+/* =========================================================
+   3. GAME  (ocupa a viewport inteira, sem sobra)
+   ========================================================= */
+
+#game {
+    position: relative;
+
+    width: 100vw;
+    width: 100dvw;
+
+    height: 100vh;
+    height: 100dvh;
+
+    overflow: hidden;
+
+    background: var(--sky);
+}
+
+
+/* =========================================================
+   4. WORLD
+   ========================================================= */
+
+.world {
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    z-index: 0;
+}
+
+
+/* =========================================================
+   5. SKY
+   ========================================================= */
+
+.sky {
+    position: absolute;
+
+    inset: 0 0 var(--ground-height) 0;
+
+    overflow: hidden;
+
+    background: var(--sky);
+}
+
+
+/* =========================================================
+   6. CLOUDS
+   ========================================================= */
+
+.cloud {
+    position: absolute;
+
+    width: 46px;
+    height: 22px;
+
+    background: var(--cloud);
+
+    box-shadow:
+        46px  0    0 var(--cloud),
+        92px  0    0 var(--cloud),
+        23px -22px 0 var(--cloud),
+        69px -22px 0 var(--cloud),
+       115px -22px 0 var(--cloud),
+        92px -44px 0 var(--cloud),
+       138px -44px 0 var(--cloud),
+       138px -66px 0 var(--cloud);
+}
+
+
+.cloud::before,
+.cloud::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    height: 22px;
+
+    background: var(--cloud-shade);
+}
+
+
+.cloud::before {
+    left: -34px;
+    width: 34px;
+}
+
+
+.cloud::after {
+    left: 138px;
+    width: 40px;
+}
+
+
+.cloud-1 {
+    top: 90px;
+    left: -40px;
+
+    animation: cloudFloatLeft 18s ease-in-out infinite alternate;
+}
+
+
+.cloud-2 {
+    top: 96px;
+    right: -30px;
+
+    transform: scaleX(-1);
+
+    animation: cloudFloatRight 22s ease-in-out infinite alternate;
+}
+
+
+.cloud-3 {
+    top: 200px;
+    right: 8%;
+
+    transform: scale(0.55);
+
+    animation: cloudFloatSmall 14s ease-in-out infinite alternate;
+}
+
+
+@keyframes cloudFloatLeft {
+    from { left: -40px; }
+    to   { left: 10px; }
+}
+
+
+@keyframes cloudFloatRight {
+    from { right: -30px; }
+    to   { right: 12px; }
+}
+
+
+@keyframes cloudFloatSmall {
+    from { right: 8%; }
+    to   { right: 11%; }
+}
+
+
+/* =========================================================
+   7. BACKGROUND ELEMENTS  (baú e TNT)
+   ========================================================= */
+
+.background-elements {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+.background-elements::before {
+    content: "";
+
+    position: absolute;
+
+    left: 22%;
+    bottom: calc(var(--ground-height) + 6px);
+
+    width: 56px;
+    height: 48px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 0 18px,
+            #d7d9e0 18px 30px,
+            transparent 30px
+        ) no-repeat 50% 0 / 10px 100%,
+        linear-gradient(
+            to bottom,
+            #d8a648 0 4px,
+            #c98b2f 4px 16px,
+            #8a5a20 16px 20px,
+            #d8a648 20px 26px,
+            #c98b2f 26px 100%
+        );
+
+    border: 4px solid var(--black);
+
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+    animation: chestIdle 2.8s ease-in-out infinite;
+}
+
+
+.background-elements::after {
+    content: "TNT";
+
+    position: absolute;
+
+    right: 26%;
+    bottom: calc(var(--ground-height) + 6px);
+
+    width: 52px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--red) 0 12px,
+            #efe7dc 12px 32px,
+            var(--red) 32px 100%
+        );
+
+    border: 4px solid var(--black);
+
+    color: var(--red-dark);
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 900;
+
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+    animation: tntIdle 1.8s ease-in-out infinite;
+}
+
+
+@keyframes chestIdle {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-3px); }
+}
+
+
+@keyframes tntIdle {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25%      { transform: translateY(-2px) rotate(-1deg); }
+    75%      { transform: translateY(-2px) rotate(1deg); }
+}
+
+
+/*
+   Nas telas com muito conteúdo os enfeites
+   atrapalham a leitura, então somem.
+*/
+
+body[data-screen="quiz-screen"] .background-elements::before,
+body[data-screen="quiz-screen"] .background-elements::after,
+body[data-screen="levels-screen"] .background-elements::before,
+body[data-screen="levels-screen"] .background-elements::after,
+body[data-screen="result-screen"] .background-elements::before,
+body[data-screen="result-screen"] .background-elements::after {
+    display: none;
+}
+
+
+/* =========================================================
+   8. TREES
+   ========================================================= */
+
+.tree {
+    position: absolute;
+
+    bottom: var(--ground-height);
+
+    width: 110px;
+    height: 170px;
+
+    transform-origin: 50% 100%;
+}
+
+
+.tree::before {
+    content: "";
+
+    position: absolute;
+
+    width: 18px;
+    height: 78px;
+
+    left: 46px;
+    bottom: 0;
+
+    background: var(--brown);
+
+    box-shadow: 6px 0 0 var(--brown-dark);
+}
+
+
+.tree::after {
+    content: "";
+
+    position: absolute;
+
+    width: 34px;
+    height: 34px;
+
+    left: 38px;
+    bottom: 70px;
+
+    background: var(--leaf);
+
+    box-shadow:
+        -34px   0px 0 var(--leaf-dark),
+         34px   0px 0 var(--leaf-light),
+        -17px -32px 0 var(--leaf-light),
+         17px -32px 0 var(--leaf),
+          0px -62px 0 var(--leaf-light),
+        -34px -30px 0 var(--leaf-dark),
+         34px -30px 0 var(--leaf-dark),
+          0px  28px 0 var(--leaf-dark),
+        -30px  26px 0 var(--leaf),
+         30px  26px 0 var(--leaf-light);
+}
+
+
+.tree-left {
+    left: 6%;
+
+    animation: treeSwayLeft 3.8s ease-in-out infinite;
+}
+
+
+.tree-right {
+    right: 5%;
+
+    animation: treeSwayRight 4.4s ease-in-out infinite;
+}
+
+
+@keyframes treeSwayLeft {
+    0%, 100% { transform: rotate(0deg); }
+    25%      { transform: rotate(-1.2deg); }
+    75%      { transform: rotate(1.2deg); }
+}
+
+
+@keyframes treeSwayRight {
+    0%, 100% { transform: scale(1.12) rotate(0deg); }
+    25%      { transform: scale(1.12) rotate(1.2deg); }
+    75%      { transform: scale(1.12) rotate(-1.2deg); }
+}
+
+
+/* =========================================================
+   9. GROUND
+   ========================================================= */
+
+.ground {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: var(--ground-height);
+
+    z-index: 2;
+}
+
+
+.grass {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 38px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            var(--grass) 0 14px,
+            var(--grass-light) 14px 22px,
+            var(--grass-dark) 22px 30px,
+            var(--grass) 30px 44px
+        ),
+        var(--grass);
+
+    border-top: 8px solid var(--grass-light);
+    border-bottom: 6px solid var(--grass-dark);
+}
+
+
+.grass::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 22px,
+            rgba(255, 255, 255, 0.14) 22px 30px,
+            transparent 30px 58px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent 0 10px,
+            rgba(0, 0, 0, 0.07) 10px 16px,
+            transparent 16px 30px
+        );
+}
+
+
+.dirt {
+    position: absolute;
+
+    inset: 38px 0 0 0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 18px,
+            rgba(0, 0, 0, 0.16) 18px 26px,
+            transparent 26px 52px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent 0 16px,
+            rgba(255, 255, 255, 0.07) 16px 24px,
+            transparent 24px 46px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            var(--dirt) 0 34px,
+            var(--dirt-light) 34px 46px,
+            var(--dirt-dark) 46px 58px,
+            var(--dirt) 58px 90px
+        ),
+        var(--dirt);
+
+    border-top: 4px solid var(--dirt-dark);
+}
+
+
+/* =========================================================
+   10. SCREEN CONTAINER
+   ========================================================= */
+
+#screen-container {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 20;
+}
+
+
+.screen {
+    position: absolute;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px 18px;
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+}
+
+
+.screen.active {
+    display: flex;
+
+    animation: screenEnter 0.4s cubic-bezier(.2, .8, .2, 1);
+}
+
+
+@keyframes screenEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.97) translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+
+/* =========================================================
+   11. HOME
+   ========================================================= */
+
+#home-screen {
+    padding: 0;
+
+    overflow: hidden;
+}
+
+
+#home-screen .home-content {
+    position: absolute;
+
+    inset: 0;
+}
+
+
+#home-screen .logo-container {
+    position: absolute;
+
+    top: 16vh;
+    left: 50%;
+
+    width: min(1000px, 94vw);
+
+    transform: translateX(-50%);
+
+    text-align: center;
+
+    z-index: 25;
+
+    animation: titleIdle 3.5s ease-in-out infinite;
+}
+
+
+@keyframes titleIdle {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(-4px); }
+}
+
+
+#home-screen .game-logo {
+    color: #6e7480;
+
+    font-size: clamp(30px, 6.5vw, 82px);
+
+    font-weight: 900;
+
+    letter-spacing: 5px;
+
+    line-height: 1.05;
+
+    -webkit-text-stroke: 7px #eef1f7;
+
+    paint-order: stroke fill;
+
+    text-shadow:
+         4px  0 0 var(--black),
+        -4px  0 0 var(--black),
+         0  4px 0 var(--black),
+         0 -4px 0 var(--black),
+         6px 8px 0 rgba(0, 0, 0, 0.25);
+}
+
+
+#home-screen .game-subtitle {
+    margin-top: 16px;
+
+    color: var(--white);
+
+    font-size: clamp(11px, 1.5vw, 16px);
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    text-shadow: 3px 3px 0 var(--black);
+}
+
+
+#home-screen .main-menu {
+    position: absolute;
+
+    top: 48vh;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    justify-content: center;
+
+    z-index: 30;
+}
+
+
+/* na home só o JOGAR aparece grande */
+
+#home-screen .main-menu button:not(#start-game) {
+    display: none;
+}
+
+
+#home-screen #start-game {
+    width: 260px;
+    height: 66px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+
+    letter-spacing: 3px;
+
+    animation: playButtonIdle 2s ease-in-out infinite;
+}
+
+
+@keyframes playButtonIdle {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-3px) scale(1.02); }
+}
+
+
+#home-screen #start-game:hover,
+#home-screen #start-game:active {
+    animation-play-state: paused;
+}
+
+
+/* atalhos (ranking, como jogar, configurações) */
+
+.home-menu-extra {
+    position: absolute;
+
+    top: calc(48vh + 90px);
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 12px;
+
+    z-index: 30;
+}
+
+
+.icon-button {
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: var(--stone);
+
+    border: 4px solid var(--black);
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset  4px  4px 0 var(--stone-light),
+        inset -4px -4px 0 var(--stone-dark),
+        5px 5px 0 rgba(0, 0, 0, 0.3);
+
+    transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+
+.icon-button:hover {
+    transform: translateY(-3px);
+
+    filter: brightness(1.08);
+}
+
+
+.icon-button:active {
+    transform: translate(3px, 3px);
+
+    box-shadow:
+        inset -4px -4px 0 var(--stone-light),
+        inset  4px  4px 0 var(--stone-dark),
+        2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   12. BOTÕES
+   ========================================================= */
+
+.pixel-button {
+    position: relative;
+
+    min-width: 150px;
+
+    padding: 14px 24px;
+
+    border: 5px solid var(--black);
+
+    background: var(--stone);
+
+    color: var(--ink);
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset  5px  5px 0 var(--stone-light),
+        inset -5px -5px 0 var(--stone-dark),
+        6px 6px 0 rgba(0, 0, 0, 0.3);
+
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease,
+        filter 0.12s ease;
+}
+
+
+.pixel-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+
+    filter: brightness(1.08);
+}
+
+
+.pixel-button:active:not(:disabled) {
+    transform: translate(4px, 4px);
+
+    box-shadow:
+        inset -5px -5px 0 var(--stone-light),
+        inset  5px  5px 0 var(--stone-dark),
+        2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+.pixel-button:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+
+.pixel-button.danger {
+    background: var(--red);
+
+    color: #fff0ec;
+
+    box-shadow:
+        inset  5px  5px 0 #cf6250,
+        inset -5px -5px 0 var(--red-dark),
+        6px 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   13. STAGE  (telas de matéria e de níveis)
+   ========================================================= */
+
+.stage {
+    position: relative;
+
+    z-index: 5;
+
+    width: min(900px, 96vw);
+
+    margin: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 18px;
+}
+
+
+.stage-header {
+    text-align: center;
+
+    color: var(--white);
+
+    text-shadow: 3px 3px 0 var(--black);
+}
+
+
+.stage-header h2 {
+    font-size: clamp(22px, 4vw, 38px);
+
+    letter-spacing: 3px;
+}
+
+
+.stage-header p {
+    margin-top: 6px;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+}
+
+
+.stage-actions {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+}
+
+
+/* =========================================================
+   14. CARDS DE MATÉRIA
+   ========================================================= */
+
+.subject-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+.subject-card {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 26px 18px;
+
+    background: var(--stone);
+
+    border: 6px solid var(--black);
+
+    color: var(--ink);
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset  6px  6px 0 var(--stone-light),
+        inset -6px -6px 0 var(--stone-dark),
+        8px 8px 0 rgba(0, 0, 0, 0.3);
+
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+
+.subject-card:hover {
+    transform: translateY(-5px);
+
+    filter: brightness(1.07);
+}
+
+
+.subject-icon {
+    font-size: 40px;
+
+    filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 0.25));
+}
+
+
+.subject-name {
+    font-size: 18px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+
+.subject-info,
+.subject-progress {
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+.progress-bar {
+    width: 100%;
+
+    height: 14px;
+
+    background: #e8ecf5;
+
+    border: 3px solid var(--black);
+
+    overflow: hidden;
+}
+
+
+.progress-bar span {
+    display: block;
+
+    height: 100%;
+
+    background: var(--grass);
+
+    transition: width 0.3s ease;
+}
+
+
+/* =========================================================
+   15. SELETOR DE DIFICULDADE
+   ========================================================= */
+
+.difficulty-select {
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+}
+
+
+.difficulty-button {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 2px;
+
+    min-width: 110px;
+
+    padding: 10px 16px;
+
+    background: var(--stone-mid);
+
+    border: 4px solid var(--black);
+
+    color: var(--white);
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+
+    transition: transform 0.1s ease, background 0.15s ease;
+}
+
+
+.difficulty-button small {
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    opacity: 0.85;
+}
+
+
+.difficulty-button:hover {
+    transform: translateY(-2px);
+}
+
+
+.difficulty-button.active {
+    background: var(--yellow);
+
+    color: var(--brown-dark);
+
+    box-shadow:
+        inset  4px  4px 0 #ffdf8a,
+        inset -4px -4px 0 #b78a1e,
+        4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   16. CARDS DE NÍVEL
+   ========================================================= */
+
+.level-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+
+    gap: 14px;
+}
+
+
+.level-card {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 18px 12px;
+
+    background: var(--stone);
+
+    border: 5px solid var(--black);
+
+    color: var(--ink);
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset  5px  5px 0 var(--stone-light),
+        inset -5px -5px 0 var(--stone-dark),
+        7px 7px 0 rgba(0, 0, 0, 0.3);
+
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+
+.level-card.unlocked:hover {
+    transform: translateY(-5px);
+
+    filter: brightness(1.07);
+}
+
+
+.level-card.locked {
+    background: #7b8193;
+
+    filter: grayscale(0.4) brightness(0.92);
+
+    cursor: not-allowed;
+}
+
+
+.level-index {
+    position: absolute;
+
+    top: -12px;
+    left: -12px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: var(--yellow);
+
+    border: 3px solid var(--black);
+
+    font-size: 14px;
+
+    font-weight: 900;
+}
+
+
+.level-icon {
+    font-size: 30px;
+}
+
+
+.level-name {
+    font-size: 13px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    text-align: center;
+}
+
+
+.level-stars {
+    color: #8a6b14;
+
+    font-size: 16px;
+
+    letter-spacing: 3px;
+}
+
+
+.level-meta {
+    font-size: 10px;
+
+    font-weight: bold;
+
+    opacity: 0.8;
+}
+
+
+.lock-icon {
+    position: absolute;
+
+    top: -14px;
+    right: -14px;
+
+    font-size: 22px;
+
+    filter: drop-shadow(3px 3px 0 var(--black));
+}
+
+
+/* =========================================================
+   17. PAINEL GENÉRICO
+   ========================================================= */
+
+.panel {
+    position: relative;
+
+    z-index: 5;
+
+    width: min(680px, 94vw);
+
+    max-height: 88vh;
+
+    overflow-y: auto;
+
+    margin: auto;
+
+    padding: 30px;
+
+    background: var(--stone);
+
+    border: 8px solid var(--black);
+
+    box-shadow:
+        inset  6px  6px 0 var(--stone-light),
+        inset -6px -6px 0 var(--stone-mid),
+        10px 10px 0 rgba(0, 0, 0, 0.3);
+
+    text-align: center;
+
+    color: var(--ink);
+}
+
+
+.panel h2 {
+    margin-bottom: 12px;
+
+    font-size: clamp(20px, 4vw, 30px);
+
+    letter-spacing: 3px;
+}
+
+
+.panel > p {
+    margin-bottom: 20px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+.panel label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: bold;
+
+    text-align: left;
+}
+
+
+.panel input[type="text"] {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-bottom: 20px;
+
+    border: 4px solid var(--black);
+
+    background: #e8ecf5;
+
+    color: var(--black);
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+    outline: none;
+
+    box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.18);
+}
+
+
+.panel-actions {
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   18. QUIZ
+   ========================================================= */
+
+.quiz-world {
+    position: relative;
+
+    z-index: 5;
+
+    width: min(900px, 96vw);
+
+    margin: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 60px 0 20px;
+}
+
+
+.quiz-enemy {
+    margin-bottom: 14px;
+}
+
+
+.enemy-sprite {
+    width: 68px;
+    height: 68px;
+
+    background:
+        radial-gradient(circle at 30% 40%, #fff 0 6px, transparent 7px),
+        radial-gradient(circle at 70% 40%, #fff 0 6px, transparent 7px),
+        var(--red);
+
+    border: 5px solid var(--black);
+
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+
+    animation: enemyIdle 1.8s ease-in-out infinite;
+}
+
+
+@keyframes enemyIdle {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-9px); }
+}
+
+
+.question-panel {
+    position: relative;
+
+    width: 100%;
+
+    padding: 28px 28px 24px;
+
+    background: var(--stone);
+
+    border: 10px solid var(--black);
+
+    outline: 4px solid var(--stone-dark);
+
+    box-shadow:
+        inset  7px  7px 0 var(--stone-light),
+        inset -7px -7px 0 var(--stone-mid),
+        10px 10px 0 rgba(0, 0, 0, 0.3);
+
+    animation: questionAppear 0.45s cubic-bezier(.2, .8, .2, 1);
+}
+
+
+@keyframes questionAppear {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+.question-tag {
+    position: absolute;
+
+    top: -22px;
+    left: 18px;
+
+    padding: 7px 14px;
+
+    background: var(--stone-light);
+
+    border: 4px solid var(--black);
+
+    color: var(--ink);
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+.question-panel h2 {
+    color: var(--ink);
+
+    text-align: center;
+
+    font-size: clamp(17px, 2.6vw, 26px);
+
+    line-height: 1.45;
+}
+
+
+.answers-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-top: 22px;
+}
+
+
+.answer-button {
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 66px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 12px 16px;
+
+    background: var(--stone);
+
+    border: 5px solid var(--black);
+
+    color: var(--ink);
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset  4px  4px 0 var(--stone-light),
+        inset -4px -4px 0 var(--stone-dark),
+        6px 6px 0 rgba(0, 0, 0, 0.3);
+
+    transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+
+.answer-button:hover:not(:disabled) {
+    transform: translateY(-4px);
+
+    filter: brightness(1.07);
+}
+
+
+.answer-button:disabled {
+    cursor: default;
+}
+
+
+.answer-letter {
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #e8ecf5;
+
+    border: 3px solid var(--black);
+
+    font-size: 15px;
+
+    font-weight: 900;
+}
+
+
+.answer-button.correct {
+    background: var(--grass);
+
+    color: #16250d;
+
+    box-shadow:
+        inset  4px  4px 0 var(--grass-light),
+        inset -4px -4px 0 #3f6d27,
+        6px 6px 0 rgba(0, 0, 0, 0.3);
+
+    animation: correctAnswer 0.45s ease-out;
+}
+
+
+.answer-button.wrong {
+    background: var(--red);
+
+    color: #fff0ec;
+
+    box-shadow:
+        inset  4px  4px 0 #cf6250,
+        inset -4px -4px 0 var(--red-dark),
+        6px 6px 0 rgba(0, 0, 0, 0.3);
+
+    animation: wrongAnswer 0.45s ease-out;
+}
+
+
+@keyframes correctAnswer {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(1.06); }
+    100% { transform: scale(1); }
+}
+
+
+@keyframes wrongAnswer {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-8px); }
+    75%      { transform: translateX(8px); }
+}
+
+
+.quiz-quit {
+    margin-top: 20px;
+
+    min-width: 120px;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   19. FEEDBACK
+   ========================================================= */
+
+.feedback-panel {
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    z-index: 60;
+
+    width: min(620px, 92vw);
+
+    max-height: 86vh;
+
+    overflow-y: auto;
+
+    padding: 26px;
+
+    background: var(--stone);
+
+    border: 8px solid var(--black);
+
+    box-shadow:
+        inset  6px  6px 0 var(--stone-light),
+        inset -6px -6px 0 var(--stone-mid),
+        10px 10px 0 rgba(0, 0, 0, 0.3);
+
+    text-align: center;
+
+    color: var(--ink);
+
+    transform: translate(-50%, -50%);
+
+    animation: feedbackPop 0.35s cubic-bezier(.2, .8, .2, 1);
+}
+
+
+@keyframes feedbackPop {
+    from { opacity: 0; transform: translate(-50%, -42%) scale(0.94); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+
+.feedback-icon {
+    width: 56px;
+    height: 56px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 12px;
+
+    background: var(--green);
+
+    color: var(--white);
+
+    border: 4px solid var(--black);
+
+    font-size: 28px;
+
+    font-weight: 900;
+}
+
+
+.feedback-icon.is-wrong {
+    background: var(--red);
+}
+
+
+.feedback-content h3 {
+    margin-bottom: 10px;
+
+    font-size: 20px;
+
+    letter-spacing: 2px;
+}
+
+
+.feedback-content p {
+    margin-bottom: 6px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+.explanation {
+    margin: 16px 0;
+
+    padding: 14px;
+
+    background: #e8ecf5;
+
+    border: 3px solid var(--black);
+
+    text-align: left;
+}
+
+
+.explanation strong {
+    display: block;
+
+    margin-bottom: 6px;
+}
+
+
+/* =========================================================
+   20. RESULTADO
+   ========================================================= */
+
+.result-panel {
+    position: relative;
+
+    z-index: 5;
+
+    width: min(700px, 94vw);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    margin: auto;
+
+    padding: 28px;
+
+    background: var(--stone);
+
+    border: 10px solid var(--black);
+
+    outline: 4px solid var(--stone-dark);
+
+    box-shadow:
+        inset  7px  7px 0 var(--stone-light),
+        inset -7px -7px 0 var(--stone-mid),
+        10px 10px 0 rgba(0, 0, 0, 0.3);
+
+    text-align: center;
+
+    color: var(--ink);
+
+    animation: feedbackPop 0.45s cubic-bezier(.2, .8, .2, 1);
+}
+
+
+.result-icon {
+    font-size: 48px;
+
+    animation: resultStar 1.5s ease-in-out infinite alternate;
+}
+
+
+@keyframes resultStar {
+    from { transform: scale(1) rotate(-4deg); }
+    to   { transform: scale(1.12) rotate(4deg); }
+}
+
+
+.result-panel h2 {
+    margin: 8px 0 6px;
+
+    font-size: clamp(20px, 4vw, 32px);
+
+    letter-spacing: 3px;
+}
+
+
+.result-stars {
+    margin-bottom: 18px;
+
+    color: #8a6b14;
+
+    font-size: 30px;
+
+    letter-spacing: 8px;
+}
+
+
+.final-score {
+    padding: 18px;
+
+    margin-bottom: 18px;
+
+    background: var(--stone-mid);
+
+    border: 5px solid var(--black);
+
+    color: var(--white);
+}
+
+
+.final-score span {
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+.final-score strong {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 40px;
+
+    text-shadow: 3px 3px 0 var(--black);
+}
+
+
+.result-stats {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+
+.stat {
+    padding: 12px;
+
+    background: #e8ecf5;
+
+    border: 3px solid var(--black);
+}
+
+
+.stat span {
+    display: block;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+.stat strong {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 22px;
+}
+
+
+.subject-stats {
+    padding: 14px;
+
+    margin-bottom: 18px;
+
+    background: var(--stone-mid);
+
+    border: 3px solid var(--black);
+
+    color: var(--white);
+}
+
+
+.subject-stats h3 {
+    margin-bottom: 10px;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+}
+
+
+#subject-results {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.subject-result {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 8px 10px;
+
+    background: #e8ecf5;
+
+    border: 2px solid var(--black);
+
+    color: var(--ink);
+
+    font-size: 11px;
+
+    text-align: left;
+}
+
+
+.result-actions {
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   21. RANKING
+   ========================================================= */
+
+.ranking-list {
+    margin: 18px 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.ranking-entry {
+    display: grid;
+
+    grid-template-columns: 45px 1fr 90px;
+
+    align-items: center;
+
+    padding: 10px;
+
+    background: #e8ecf5;
+
+    border: 3px solid var(--black);
+
+    text-align: left;
+
+    font-size: 13px;
+}
+
+
+.ranking-position {
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+.ranking-name {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.ranking-name small {
+    display: block;
+
+    font-size: 9px;
+
+    opacity: 0.7;
+}
+
+
+.ranking-score {
+    text-align: right;
+
+    font-weight: bold;
+}
+
+
+.ranking-empty {
+    font-size: 12px;
+
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   22. COMO JOGAR / CONFIGURAÇÕES
+   ========================================================= */
+
+.instructions-panel {
+    width: min(700px, 94vw);
+}
+
+
+.instruction {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 12px;
+
+    margin-bottom: 10px;
+
+    background: #e8ecf5;
+
+    border: 3px solid var(--black);
+
+    text-align: left;
+}
+
+
+.instruction-icon {
+    flex-shrink: 0;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: var(--stone-mid);
+
+    border: 3px solid var(--black);
+
+    font-size: 20px;
+}
+
+
+.instruction h3 {
+    margin-bottom: 3px;
+
+    font-size: 12px;
+}
+
+
+.instruction p {
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+.setting {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 14px;
+
+    margin-bottom: 10px;
+
+    background: #e8ecf5;
+
+    border: 3px solid var(--black);
+
+    font-weight: bold;
+}
+
+
+.setting label {
+    margin: 0;
+}
+
+
+.setting input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+
+    accent-color: var(--stone-dark);
+}
+
+
+/* =========================================================
+   23. HUD
+   ========================================================= */
+
+.hud {
+    position: absolute;
+
+    top: 14px;
+    left: 14px;
+    right: 14px;
+
+    z-index: 50;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 8px;
+
+    pointer-events: none;
+}
+
+
+.hud-left,
+.hud-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.hud-left span,
+.hud-center,
+.score,
+.timer {
+    padding: 7px 11px;
+
+    background: var(--stone);
+
+    border: 4px solid var(--black);
+
+    color: var(--ink);
+
+    font-weight: bold;
+
+    font-size: 12px;
+
+    box-shadow:
+        inset  3px  3px 0 var(--stone-light),
+        inset -3px -3px 0 var(--stone-dark),
+        4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+.timer {
+    min-width: 52px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+
+.timer.warning {
+    background: var(--yellow);
+
+    animation: timerWarning 0.6s ease-in-out infinite;
+}
+
+
+.timer.danger {
+    background: var(--red);
+
+    color: #fff0ec;
+
+    animation: timerWarning 0.35s ease-in-out infinite;
+}
+
+
+@keyframes timerWarning {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.12); }
+}
+
+
+.score.score-pop {
+    animation: scorePop 0.35s ease-out;
+}
+
+
+@keyframes scorePop {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.22); }
+    100% { transform: scale(1); }
+}
+
+
+/* =========================================================
+   24. TOAST E TRANSIÇÃO
+   ========================================================= */
+
+.toast {
+    position: fixed;
+
+    left: 50%;
+    bottom: 28px;
+
+    z-index: 100;
+
+    padding: 12px 20px;
+
+    background: var(--stone);
+
+    color: var(--ink);
+
+    border: 4px solid var(--black);
+
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+
+    transform: translateX(-50%);
+
+    font-weight: bold;
+
+    font-size: 13px;
+
+    animation: toastAppear 0.25s ease-out;
+}
+
+
+@keyframes toastAppear {
+    from { opacity: 0; transform: translate(-50%, 18px); }
+    to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+
+.screen-transition {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 200;
+
+    pointer-events: none;
+
+    background: var(--dirt-dark);
+
+    transform: translateY(100%);
+
+    transition: transform 0.4s cubic-bezier(.76, 0, .24, 1);
+}
+
+
+.screen-transition.active {
+    transform: translateY(0);
+}
+
+
+.screen-transition::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 14px;
+
+    background: var(--grass);
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   25. SCROLLBARS
+   ========================================================= */
+
+.screen::-webkit-scrollbar,
+.panel::-webkit-scrollbar,
+.result-panel::-webkit-scrollbar,
+.feedback-panel::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+.screen::-webkit-scrollbar-track,
+.panel::-webkit-scrollbar-track,
+.result-panel::-webkit-scrollbar-track,
+.feedback-panel::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+
+.screen::-webkit-scrollbar-thumb,
+.panel::-webkit-scrollbar-thumb,
+.result-panel::-webkit-scrollbar-thumb,
+.feedback-panel::-webkit-scrollbar-thumb {
+    background: var(--stone-dark);
+
+    border: 2px solid var(--black);
+}
+
+
+/* =========================================================
+   26. TABLET / CELULAR
+   ========================================================= */
+
+@media (max-width: 860px) {
+
+    :root {
+        --ground-height: 22%;
+    }
+
+
+    .tree {
+        transform: scale(0.6);
+    }
+
+
+    .tree-left  { left: -18px; }
+    .tree-right { right: -18px; }
+
+
+    @keyframes treeSwayLeft {
+        0%, 100% { transform: scale(0.6) rotate(0deg); }
+        25%      { transform: scale(0.6) rotate(-1.2deg); }
+        75%      { transform: scale(0.6) rotate(1.2deg); }
+    }
+
+
+    @keyframes treeSwayRight {
+        0%, 100% { transform: scale(0.6) rotate(0deg); }
+        25%      { transform: scale(0.6) rotate(1.2deg); }
+        75%      { transform: scale(0.6) rotate(-1.2deg); }
+    }
+
+
+    .cloud-3 {
+        display: none;
+    }
+
+
+    #home-screen .logo-container {
+        top: 12vh;
+    }
+
+
+    #home-screen .game-logo {
+        font-size: clamp(26px, 8.5vw, 48px);
+
+        letter-spacing: 2px;
+
+        -webkit-text-stroke: 5px #eef1f7;
+    }
+
+
+    #home-screen .main-menu {
+        top: 46vh;
+    }
+
+
+    #home-screen #start-game {
+        width: 210px;
+        height: 58px;
+
+        font-size: 17px;
+    }
+
+
+    .home-menu-extra {
+        top: calc(46vh + 78px);
+    }
+
+
+    .subject-grid {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+
+    .subject-card {
+        flex-direction: row;
+
+        flex-wrap: wrap;
+
+        justify-content: flex-start;
+
+        padding: 16px;
+    }
+
+
+    .subject-icon {
+        font-size: 30px;
+    }
+
+
+    .subject-name {
+        font-size: 15px;
+    }
+
+
+    .level-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+
+    .answers-grid {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+
+    .answer-button {
+        min-height: 54px;
+
+        font-size: 13px;
+
+        border-width: 4px;
+    }
+
+
+    .quiz-world {
+        padding: 70px 0 16px;
+    }
+
+
+    .question-panel {
+        padding: 20px 16px 16px;
+
+        border-width: 7px;
+    }
+
+
+    .question-panel h2 {
+        font-size: 16px;
+    }
+
+
+    .enemy-sprite {
+        width: 54px;
+        height: 54px;
+    }
+
+
+    .hud {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
+
+    .hud-left span,
+    .hud-center,
+    .score,
+    .timer {
+        padding: 5px 7px;
+
+        border-width: 3px;
+
+        font-size: 9px;
+    }
+
+
+    .timer {
+        min-width: 38px;
+
+        font-size: 13px;
+    }
+
+
+    .result-stats {
+        gap: 6px;
+    }
+
+
+    .stat strong {
+        font-size: 17px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    #home-screen .game-logo {
+        font-size: 26px;
+    }
+
+
+    .level-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .hud-left span:nth-child(2) {
+        display: none;
+    }
+
+
+    .pixel-button {
+        min-width: 120px;
+
+        padding: 11px 14px;
+
+        font-size: 13px;
+    }
+
+
+    .result-actions .pixel-button {
+        flex: 1 1 100%;
+    }
+
+}
+
+
+/* =========================================================
+   27. REDUÇÃO DE MOVIMENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+
+        transition: none !important;
+    }
+
+}

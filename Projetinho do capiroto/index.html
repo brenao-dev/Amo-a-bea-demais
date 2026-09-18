@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta
+        name="description"
+        content="PixelzinhoMaroto — quiz de Matemática e Física com tempo e níveis de dificuldade.">
+
+    <title>PixelzinhoMaroto</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<main id="game">
+
+    <!-- ==============================
+         CENÁRIO
+         ============================== -->
+
+    <div class="world" aria-hidden="true">
+
+        <div class="sky">
+
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            <div class="cloud cloud-3"></div>
+
+        </div>
+
+        <div class="background-elements">
+
+            <div class="tree tree-left"></div>
+            <div class="tree tree-right"></div>
+
+        </div>
+
+        <div class="ground">
+
+            <div class="grass"></div>
+            <div class="dirt"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         HUD
+         ============================== -->
+
+    <header id="game-hud" class="hud hidden">
+
+        <div class="hud-left">
+
+            <span id="phase-display">NÍVEL</span>
+
+            <span id="category-display">MATÉRIA</span>
+
+            <span id="difficulty-display">FÁCIL</span>
+
+        </div>
+
+        <div class="hud-center">
+
+            <span id="question-progress">1/5</span>
+
+        </div>
+
+        <div class="hud-right">
+
+            <div class="score">
+                ⭐ <span id="score-display">0</span>
+            </div>
+
+            <div id="timer" class="timer" aria-label="Tempo restante">15</div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==============================
+         TELAS
+         ============================== -->
+
+    <section id="screen-container">
+
+
+        <!-- ========== HOME ========== -->
+
+        <section id="home-screen" class="screen active">
+
+            <div class="home-content">
+
+                <div class="logo-container">
+
+                    <h1 class="game-logo">BEA QUIZES</h1>
+
+                    <p class="game-subtitle">Um desafio de raciocínio</p>
+
+                </div>
+
+                <nav class="main-menu">
+
+                    <button id="start-game" class="pixel-button primary">JOGAR</button>
+
+                    <button id="open-ranking" class="pixel-button">RANKING</button>
+
+                    <button id="open-how-to-play" class="pixel-button">COMO JOGAR</button>
+
+                    <button id="open-settings" class="pixel-button">CONFIGURAÇÕES</button>
+
+                </nav>
+
+                <div class="home-menu-extra">
+
+                    <button class="icon-button" id="open-ranking-mobile" title="Ranking">🏆</button>
+
+                    <button class="icon-button" id="open-how-to-play-mobile" title="Como jogar">❓</button>
+
+                    <button class="icon-button" id="open-settings-mobile" title="Configurações">⚙️</button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========== NOME ========== -->
+
+        <section id="username-screen" class="screen">
+
+            <div class="panel">
+
+                <h2>QUEM ESTÁ JOGANDO?</h2>
+
+                <p>Escolha um nome para aparecer no seu progresso.</p>
+
+                <label for="username">Nome de usuário</label>
+
+                <input
+                    id="username"
+                    type="text"
+                    maxlength="16"
+                    autocomplete="nickname"
+                    placeholder="Digite seu nome">
+
+                <div class="panel-actions">
+
+                    <button id="confirm-username" class="pixel-button primary">CONTINUAR</button>
+
+                    <button class="pixel-button back-button" data-target="home-screen">VOLTAR</button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========== MATÉRIAS ========== -->
+
+        <section id="subject-screen" class="screen">
+
+            <div class="stage">
+
+                <header class="stage-header">
+
+                    <h2>ESCOLHA A MATÉRIA</h2>
+
+                    <p id="welcome-player">Olá, jogador!</p>
+
+                </header>
+
+                <div id="subject-grid" class="subject-grid">
+                    <!-- preenchido pelo JavaScript -->
+                </div>
+
+                <div class="stage-actions">
+
+                    <button class="pixel-button back-button" data-target="home-screen">MENU</button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========== NÍVEIS DA MATÉRIA ========== -->
+
+        <section id="levels-screen" class="screen">
+
+            <div class="stage">
+
+                <header class="stage-header">
+
+                    <h2 id="levels-title">MATEMÁTICA</h2>
+
+                    <p id="levels-subtitle">Escolha um nível para começar</p>
+
+                </header>
+
+                <div class="difficulty-select" id="difficulty-select" role="group" aria-label="Dificuldade">
+
+                    <button class="difficulty-button active" data-difficulty="facil">
+                        FÁCIL <small>20s</small>
+                    </button>
+
+                    <button class="difficulty-button" data-difficulty="medio">
+                        MÉDIO <small>15s</small>
+                    </button>
+
+                    <button class="difficulty-button" data-difficulty="dificil">
+                        DIFÍCIL <small>10s</small>
+                    </button>
+
+                </div>
+
+                <div id="level-grid" class="level-grid">
+                    <!-- preenchido pelo JavaScript -->
+                </div>
+
+                <div class="stage-actions">
+
+                    <button id="back-to-subjects" class="pixel-button">MATÉRIAS</button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========== QUIZ ========== -->
+
+        <section id="quiz-screen" class="screen">
+
+            <div class="quiz-world">
+
+                <div class="quiz-enemy" aria-hidden="true">
+                    <div class="enemy-sprite"></div>
+                </div>
+
+                <div class="question-panel">
+
+                    <div class="question-tag">
+                        <span id="question-category">ARITMÉTICA</span>
+                    </div>
+
+                    <h2 id="question-text">Carregando…</h2>
+
+                </div>
+
+                <div id="answers-container" class="answers-grid">
+                    <!-- preenchido pelo JavaScript -->
+                </div>
+
+                <div id="answer-feedback" class="feedback-panel hidden">
+
+                    <div id="feedback-icon" class="feedback-icon">✓</div>
+
+                    <div class="feedback-content">
+
+                        <h3 id="feedback-title">RESPOSTA CORRETA</h3>
+
+                        <p id="feedback-selected">Você escolheu B.</p>
+
+                        <p id="feedback-correct">A resposta correta é B.</p>
+
+                        <div class="explanation">
+
+                            <strong>Explicação</strong>
+
+                            <p id="feedback-explanation">—</p>
+
+                        </div>
+
+                    </div>
+
+                    <button id="next-question" class="pixel-button primary">CONTINUAR</button>
+
+                </div>
+
+                <button id="quit-quiz" class="pixel-button quiz-quit">SAIR</button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========== RESULTADO ========== -->
+
+        <section id="result-screen" class="screen">
+
+            <div class="result-panel">
+
+                <div id="result-icon" class="result-icon">⭐</div>
+
+                <h2 id="result-title">NÍVEL CONCLUÍDO!</h2>
+
+                <div id="result-stars" class="result-stars">☆☆☆</div>
+
+                <div class="final-score">
+
+                    <span>PONTUAÇÃO</span>
+
+                    <strong id="final-score">0</strong>
+
+                </div>
+
+                <div class="result-stats">
+
+                    <div class="stat">
+                        <span>ACERTOS</span>
+                        <strong id="final-correct">0</strong>
+                    </div>
+
+                    <div class="stat">
+                        <span>ERROS</span>
+                        <strong id="final-wrong">0</strong>
+                    </div>
+
+                    <div class="stat">
+                        <span>TEMPO</span>
+                        <strong id="final-time">0s</strong>
+                    </div>
+
+                </div>
+
+                <div class="subject-stats">
+
+                    <h3>SEU DESEMPENHO</h3>
+
+                    <div id="subject-results"></div>
+
+                </div>
+
+                <div class="result-actions">
+
+                    <button id="retry-level" class="pixel-button">REPETIR</button>
+
+                    <button id="continue-game" class="pixel-button primary">PRÓXIMO NÍVEL</button>
+
+                    <button id="return-map" class="pixel-button">NÍVEIS</button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========== RANKING ========== -->
+
+        <section id="ranking-screen" class="screen">
+
+            <div class="panel ranking-panel">
+
+                <h2>RANKING</h2>
+
+                <p>Ranking local deste dispositivo.</p>
+
+                <div id="ranking-list" class="ranking-list"></div>
+
+                <button class="pixel-button back-button" data-target="home-screen">VOLTAR</button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========== COMO JOGAR ========== -->
+
+        <section id="how-to-play-screen" class="screen">
+
+            <div class="panel instructions-panel">
+
+                <h2>COMO JOGAR</h2>
+
+                <div class="instruction">
+
+                    <span class="instruction-icon">📚</span>
+
+                    <div>
+                        <h3>ESCOLHA A MATÉRIA</h3>
+                        <p>Matemática e Física têm níveis próprios, como Álgebra e Cinemática.</p>
+                    </div>
+
+                </div>
+
+                <div class="instruction">
+
+                    <span class="instruction-icon">🎚️</span>
+
+                    <div>
+                        <h3>ESCOLHA A DIFICULDADE</h3>
+                        <p>Fácil dá 20s por questão, Médio 15s e Difícil apenas 10s — com mais pontos.</p>
+                    </div>
+
+                </div>
+
+                <div class="instruction">
+
+                    <span class="instruction-icon">⏱</span>
+
+                    <div>
+                        <h3>RESPONDA RÁPIDO</h3>
+                        <p>Quanto mais tempo sobrar no relógio, maior o bônus de pontuação.</p>
+                    </div>
+
+                </div>
+
+                <div class="instruction">
+
+                    <span class="instruction-icon">⭐</span>
+
+                    <div>
+                        <h3>GANHE ESTRELAS</h3>
+                        <p>Acerte pelo menos 60% para concluir o nível e liberar o próximo.</p>
+                    </div>
+
+                </div>
+
+                <button class="pixel-button back-button" data-target="home-screen">VOLTAR</button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========== CONFIGURAÇÕES ========== -->
+
+        <section id="settings-screen" class="screen">
+
+            <div class="panel">
+
+                <h2>CONFIGURAÇÕES</h2>
+
+                <div class="setting">
+                    <label for="sound-toggle">Sons</label>
+                    <input id="sound-toggle" type="checkbox" checked>
+                </div>
+
+                <div class="setting">
+                    <label for="music-toggle">Música</label>
+                    <input id="music-toggle" type="checkbox" checked>
+                </div>
+
+                <div class="setting">
+                    <label for="shuffle-toggle">Embaralhar questões</label>
+                    <input id="shuffle-toggle" type="checkbox" checked>
+                </div>
+
+                <div class="panel-actions">
+
+                    <button id="reset-progress" class="pixel-button danger">APAGAR PROGRESSO</button>
+
+                    <button class="pixel-button back-button" data-target="home-screen">VOLTAR</button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+
+
+    <!-- ==============================
+         NOTIFICAÇÃO
+         ============================== -->
+
+    <div id="toast" class="toast hidden" role="status" aria-live="polite">Mensagem</div>
+
+
+    <!-- ==============================
+         TRANSIÇÃO
+         ============================== -->
+
+    <div id="screen-transition" class="screen-transition" aria-hidden="true"></div>
+
+</main>
+
+<script src="./javascript/game.js"></script>
+
+</body>
+
+</html>
